@@ -11,10 +11,6 @@ const { lib } = require("crypto-js");
 const Home = () => {
   //const navigate = useNavigate();
   let goToLink = null;
-  let imageList = [];
-  const [imgList, setImgList] = useState([]);
-
-  getImages();
 
   const PrivateSpaceLink = () => {
     const token = generateRandomToken(16);
@@ -42,30 +38,6 @@ const Home = () => {
     return randomToken;
   }
 
-  function addImage() {
-    const isValid = postImage();
-  }
-
-  function getImages() {
-    imageList = getImageList;
-    console.log(imageList);
-  }
-
-  const fetchPost = async () => {
-    const db = getFirestore(app);
-    await getDocs(collection(db, "img")).then((querySnapshot) => {
-      const newData = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setImgList(newData);
-      console.log(imgList, newData);
-    });
-  };
-
-  useEffect(() => {
-    fetchPost();
-  }, []);
   return (
     <div>
       <ImageList />
@@ -86,13 +58,6 @@ const Home = () => {
           </div>
         )} */}
       </header>
-      <div>
-        {imgList?.map((img, i) => (
-          <p key={i}>{img.url}</p>
-        ))}
-      </div>
-      {imageList}
-      <button onClick={addImage}>Ajouter une image</button>
     </div>
   );
 };
